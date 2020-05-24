@@ -5,6 +5,8 @@ import io from "socket.io-client";
 import "./Chat.css";
 
 import InfoBar from "../InfoBar/InfoBar.js";
+import Input from "../Input/Input.js";
+import Messages from "../Messages/Messages.js";
 
 let socket; 
 
@@ -37,28 +39,23 @@ const Chat = ( {location} ) => {
 
     useEffect(() => {
         socket.on("message", (message) => {
-            setMessages([...messages, message]);
+            setMessages(messages => [...messages, message]);
         })
-    }, [messages]);
+    }, []);
 
     const sendMessage = (event) => {
         event.preventDefault();
         if(message) {
-            socket.emit("sendMessage", () => {
-                setMessage("");
-            })
+            socket.emit("sendMessage", message, () => setMessage(""))
         }
     }
 
-    console.log(message, messages);
     return (
         <div className="outerContainer">
             <div className="container">
                 <InfoBar room={room}/>
-                <input value={message} 
-                onChnage={(event) => setMessage(event.target.value)}
-                onKeyPress={(event) => event.key === "Enter" ? sendMessage(event) : null}
-                />
+                <Messages messages={messages} name={name}/>
+                <Input message={message} setMessage={setMessage} sendMessage={sendMessage}/>
             </div>
         </div>
     );
