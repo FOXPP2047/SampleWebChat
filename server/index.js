@@ -37,6 +37,7 @@ io.on("connection", (socket) => {
         io.to(user.room).emit("message", {user: user.name, text: message});
         callback();
     });
+    
     socket.on("disconnection", () => {
         const user = removeUser(socket.id);
 
