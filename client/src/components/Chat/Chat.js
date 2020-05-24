@@ -31,11 +31,6 @@ const Chat = ( {location} ) => {
                 alert(error);
             }
         });
-
-        return () => {
-            socket.emit("disconnection");
-            socket.off();
-        }
     }, [ENDPOINT, location.search]);
 
     useEffect(() => {

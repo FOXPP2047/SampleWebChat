@@ -16,7 +16,7 @@ const io = socketio(server);
 app.use(cors());
 app.use(router);
 
-io.on("connection", (socket) => {
+io.on("connect", (socket) => {
     socket.on("join", ( {name, room}, callback ) => {
         const {error, user} = addUser({id: socket.id, name, room});
 
@@ -39,7 +39,7 @@ io.on("connection", (socket) => {
         callback();
     });
 
-    socket.on("disconnection", () => {
+    socket.on("disconnect", () => {
         const user = removeUser(socket.id);
 
         if(user) {
