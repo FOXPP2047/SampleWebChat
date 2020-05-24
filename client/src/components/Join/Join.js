@@ -14,6 +14,7 @@ const Join = () => {
     function handleRoomChange(event) {
         setRoom(event.target.value);
     }
+    
     return (
         <div className="joinOuterContainer">
             <div className="joinInnerContainer">
