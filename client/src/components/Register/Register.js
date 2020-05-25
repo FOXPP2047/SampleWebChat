@@ -30,7 +30,9 @@ const Register = () => {
 
     function passwordCheck(event) {
         socket.emit("register", { name, password }, (isRegistered) => {
-            if(isRegistered) {
+            if (isRegistered === -1) {
+                alert("Please, Fill the Blank.");
+            } else if(isRegistered === 1) {
                 if(password !== confirmPassowrd) {
                     event.preventDefault();
                     alert("Password is different. Please Check Again");
@@ -39,7 +41,7 @@ const Register = () => {
                     alert("Your name and password is sucessfully enrolled.");
                     history.push("/");
                 }
-            } else {
+            } else if(isRegistered === 0) {
                 alert("Your ID already has used");
                 window.location.reload();
             }

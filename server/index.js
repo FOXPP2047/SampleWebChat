@@ -48,21 +48,22 @@ io.on("connect", (socket) => {
         callback();
     });
 
-    socket.on("register", ({ name: getName, password: getPassword }, callback) => {
+    socket.on("register", async ({ name: getName, password: getPassword }, callback) => {
+        if(!getName || !getPassword) {
+            callback(-1);
+            return;
+        }
         const newUser = new User({
             name: getName,
             password: getPassword
         });
-        User.findOne({name: newUser.name}, function(err, user) {
-            if(!err) {
-                if(user) {
-                    callback(false);
-                } else {
-                    newUser.save();
-                    callback(true);
-                }
-            }
-        });
+        const result = await User.findOne({name: newUser.name});
+        if(result) {
+            callback(0);
+        } else {
+            newUser.save();
+            callback(1);
+        }
     });
 
     socket.on("disconnect", () => {
