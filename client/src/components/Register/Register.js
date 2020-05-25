@@ -36,6 +36,7 @@ const Register = () => {
                     alert("Password is different. Please Check Again");
                     window.location.reload();
                 } else {
+                    alert("Your name and password is sucessfully enrolled.");
                     history.push("/");
                 }
             } else {

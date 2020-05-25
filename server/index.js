@@ -2,6 +2,7 @@ const express = require("express");
 const socketio = require("socket.io");
 const http = require("http");
 const cors = require("cors");
+const mongoose = require("mongoose");
 
 const { addUser, removeUser, getUser, getUsersInRoom } = require("./users.js");
 
@@ -15,6 +16,14 @@ const io = socketio(server);
 
 app.use(cors());
 app.use(router);
+
+mongoose.connect("mongodb://localhost:27017/chatDB", {useNewUrlParser: true, useUnifiedTopology: true});
+
+const chatUserDBSchema = {
+    name: String,
+    password: String
+};
+const User = mongoose.model("User", chatUserDBSchema);
 
 io.on("connect", (socket) => {
     socket.on("join", ( {name, room}, callback ) => {
@@ -39,9 +48,21 @@ io.on("connect", (socket) => {
         callback();
     });
 
-    socket.on("register", ({ name, password }, callback) => {
-        console.log(name, password);
-        callback(true);
+    socket.on("register", ({ name: getName, password: getPassword }, callback) => {
+        const newUser = new User({
+            name: getName,
+            password: getPassword
+        });
+        User.findOne({name: newUser.name}, function(err, user) {
+            if(!err) {
+                if(user) {
+                    callback(false);
+                } else {
+                    newUser.save();
+                    callback(true);
+                }
+            }
+        });
     });
 
     socket.on("disconnect", () => {
