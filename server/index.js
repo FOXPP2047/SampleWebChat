@@ -39,6 +39,11 @@ io.on("connect", (socket) => {
         callback();
     });
 
+    socket.on("register", ({ name, password }, callback) => {
+        console.log(name, password);
+        callback(true);
+    });
+
     socket.on("disconnect", () => {
         const user = removeUser(socket.id);
 
