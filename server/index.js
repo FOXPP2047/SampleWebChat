@@ -66,6 +66,24 @@ io.on("connect", (socket) => {
         }
     });
 
+    socket.on("login", async ({ name: getName, password: getPassword }, callback) => {
+        if(!getName || !getPassword) {
+            callback(-2);
+            return;
+        }
+
+        const result = await User.findOne({name: getName});
+
+        if(!result) {
+            callback(-1);
+        } else {
+            if(result.password === getPassword) {
+                callback(1);
+            } else {
+                callback(0)
+            }
+        }
+    });
     socket.on("disconnect", () => {
         const user = removeUser(socket.id);
 
