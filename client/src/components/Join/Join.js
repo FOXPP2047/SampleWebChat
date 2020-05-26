@@ -34,7 +34,7 @@ const Join = () => {
                 alert("Enter an invalid Password");
                 window.location.reload();
             } else if(loginCheck === 1) {
-                history.push("/rooms");
+                history.push("/rooms?name=" + name);
             }
         });
     }

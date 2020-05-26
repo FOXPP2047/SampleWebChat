@@ -12,7 +12,7 @@ const App = () => (
         <Route path="/" exact component={Join} />
         <Route path="/register" component={Register}/>
         <Route path="/chat" component={Chat} />
-        <Route path="rooms" component={Rooms} />
+        <Route path="/rooms" component={Rooms} />
     </Router>
 );
 
