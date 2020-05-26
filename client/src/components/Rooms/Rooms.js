@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
+import RoomHeading from "./RoomHeading/RoomHeading.js";
 import RoomNameInput from "./RoomNameInput/RoomNameInput.js";
-import "./Rooms.css";
 
 const Rooms = ( { location } ) => {
     const [make, setMake] = useState(false);
@@ -13,9 +13,7 @@ const Rooms = ( { location } ) => {
     return (
         <div className="roomsOuterContainer">
             <div className="roomsInnerContainer">
-                <div className="head"> <h1>Rooms</h1> </div>
-                <button onClick={handleMakeRoom} className="room-btn mt-20" type="submit"> Make a Room </button>
-                { make ? <RoomNameInput location={location}/> : null}
+                { make ? <RoomNameInput location={location}/> : <RoomHeading handleMakeRoom={handleMakeRoom}/>}
             </div>
         </div>
     );
