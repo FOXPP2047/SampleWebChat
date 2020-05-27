@@ -112,6 +112,22 @@ io.on("connect", (socket) => {
             }
         }
     });
+
+    socket.on("getRoomData", async (callback) => {
+        const result = await Room.find({});
+        const rooms = [];
+
+        let push_back = new Promise((resolve) => {
+            for(let i = 0; i < result.length; ++i) {
+                rooms.push(result[i].name);
+            }
+            resolve(rooms);
+        });
+        push_back.then((data) => {
+            callback(data);
+        });
+    });
+
     socket.on("disconnect", async () => {
         const userData = getUser(socket.id);
 
@@ -120,16 +136,19 @@ io.on("connect", (socket) => {
             let roomName = userData.room;
 
             const result = await Room.findOne({name: roomName});
-            result.users.forEach((element, index) => {
-                if(element === userName) {
-                    result.users.splice(index, 1);
-                }
-            });
 
-            if(!result.users.length) {
-                Room.deleteOne({ name: result.name });
+            if(result) {
+                result.users.forEach((element, index) => {
+                    if(element === userName) {
+                        result.users.splice(index, 1);
+                        result.save();
+                    }
+                });
+    
+                if(!result.users.length) {
+                    Room.deleteOne({ name: result.name }, function() {});
+                }
             }
-            result.save();
         }
 
         const user = removeUser(socket.id);

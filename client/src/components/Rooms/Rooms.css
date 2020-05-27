@@ -20,6 +20,9 @@ html, body {
     background-color: #1A1A1D;
 }
 
+.room {
+    color: yellow;
+}
 .roomsInnerContainer {
     width: 20%;
 }

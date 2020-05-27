@@ -13,7 +13,7 @@ const Rooms = ( { location } ) => {
     return (
         <div className="roomsOuterContainer">
             <div className="roomsInnerContainer">
-                { make ? <RoomNameInput location={location}/> : <RoomHeading handleMakeRoom={handleMakeRoom}/>}
+                { make ? <RoomNameInput location={location}/> : <RoomHeading location={location} handleMakeRoom={handleMakeRoom}/>}
             </div>
         </div>
     );
