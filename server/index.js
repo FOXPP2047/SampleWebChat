@@ -42,8 +42,18 @@ io.on("connect", (socket) => {
             newRoom.users.push(name);
             newRoom.save();
         } else {
-            result.users.push(name);
-            result.save();
+            let already = false;
+
+            result.users.forEach(e => {
+                if(e === name) {
+                    already = true;
+                    return callback("Your ID already joined this room.");
+                }
+            });
+            if(!already) {
+                result.users.push(name);
+                result.save();
+            }
         }
         const {error, user} = addUser({id: socket.id, name, room});
 
@@ -117,7 +127,6 @@ io.on("connect", (socket) => {
             });
 
             if(!result.users.length) {
-                console.log(result.id + " successfully deleted");
                 Room.deleteOne({ name: result.name });
             }
             result.save();
