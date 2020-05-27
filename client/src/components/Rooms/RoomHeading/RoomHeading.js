@@ -2,8 +2,7 @@ import React from "react";
 
 import "../Rooms.css";
 
-const RoomHeading = ({handleMakeRoom}) => {
-    console.log(handleMakeRoom);
+const RoomHeading = ( { handleMakeRoom } ) => {
     return (
         <div>
             <div className="head"> <h1>Rooms</h1> </div>

@@ -23,10 +23,28 @@ const chatUserDBSchema = {
     name: String,
     password: String
 };
+
+const roomDBSchema = {
+    name: String,
+    users: [String],
+};
+
 const User = mongoose.model("User", chatUserDBSchema);
+const Room = mongoose.model("Room", roomDBSchema);
 
 io.on("connect", (socket) => {
-    socket.on("join", ( {name, room}, callback ) => {
+    socket.on("join", async ( {name, room}, callback ) => {
+        const result = await Room.findOne({name: room});
+        if(!result) {
+            const newRoom = new Room({
+                name: room,
+            });
+            newRoom.users.push(name);
+            newRoom.save();
+        } else {
+            result.users.push(name);
+            result.save();
+        }
         const {error, user} = addUser({id: socket.id, name, room});
 
         if(error) {
@@ -84,7 +102,27 @@ io.on("connect", (socket) => {
             }
         }
     });
-    socket.on("disconnect", () => {
+    socket.on("disconnect", async () => {
+        const userData = getUser(socket.id);
+
+        if(userData) {
+            let userName = userData.name;
+            let roomName = userData.room;
+
+            const result = await Room.findOne({name: roomName});
+            result.users.forEach((element, index) => {
+                if(element === userName) {
+                    result.users.splice(index, 1);
+                }
+            });
+
+            if(!result.users.length) {
+                console.log(result.id + " successfully deleted");
+                Room.deleteOne({ name: result.name });
+            }
+            result.save();
+        }
+
         const user = removeUser(socket.id);
 
         if(user) {
