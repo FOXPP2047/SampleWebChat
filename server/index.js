@@ -147,10 +147,18 @@ io.on("connect", (socket) => {
                 });
     
                 if(!result.users.length) {
-                    Room.findOneAndDelete({ name: result.name }, function(err) {
-                        if(err)
-                            console.log(err);
-                    });
+                    const findRoom = Room.findOne({name: roomName}).exec();
+
+                    if(findRoom) {
+                        Room.findOneAndDelete({ _id: findRoom._id }, function(err) {
+                            if(err) {
+                                console.log(err);
+                            } else {
+                                console.log("Successfully Deleted " + result.name);
+                                return;
+                            }
+                        });
+                    }
                 }
             }
         }
