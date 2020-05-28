@@ -19,17 +19,18 @@ html, body {
     align-items: center;
     background-color: #1A1A1D;
 }
-
-.room {
-    color: yellow;
-}
 .roomsInnerContainer {
     width: 20%;
 }
 
+.mt-20 {
+    margin-top: 20px;
+  }
+
 .room-btn {
-    background-color: #008CBA;
-    color: #fff !important;  
+    background-color: peru;
+    color: #fff;  
+    transition-duration: 0.4s;
     text-transform: uppercase;
     text-decoration: none;
     padding: 20px;
@@ -37,4 +38,26 @@ html, body {
     display: inline-block;
     border: none;
     width: 100%;
+}
+
+.room-btn:hover {
+    background-color: white; /* Green */
+    color: peru;
+  }
+
+.make-btn {
+    background-color: #008CBA;
+    color: #fff;  
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 20px;
+    border-radius: 5px;
+    display: inline-block;
+    border: none;
+    width: 100%;
+}
+
+.make-btn:hover {
+    background-color: white; /* Green */
+    color: #008CBA;
 }

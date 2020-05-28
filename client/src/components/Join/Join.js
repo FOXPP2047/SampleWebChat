@@ -47,10 +47,10 @@ const Join = () => {
                 {/* <Link onClick={event => (!name || !room) ? event.preventDefault() : null} to={"/chat?name=" + name + "&room=" + room}>
                     <button className="button mt-20 sign" type="submit">Sign In</button>
                 </Link> */}
-                <button onClick={event => checkLoginIdPassword(event)} className="button mt-20 sign" type="submit">Sign In</button>
+                <button onClick={event => checkLoginIdPassword(event)} className="sign-button mt-20" type="submit">Sign In</button>
 
                 <Link to={"/register"}>
-                    <button className="button mt-20 register" type="button">Register</button>
+                    <button className="register-button mt-20" type="button">Register</button>
                 </Link>
             </div>
         </div>

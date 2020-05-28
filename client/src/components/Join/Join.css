@@ -38,15 +38,23 @@ html, body {
     border-bottom: 2px solid white;
   }
   
-  .sign {
+  .sign-button {
+    color: #fff;
     background-color: #008CBA;
+    transition-duration: 0.4s;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 20px;
+    border-radius: 5px;
+    display: inline-block;
+    border: none;
+    width: 100%;
   }
-  .register {
-    background-color: #d92027;
-  }
-  .button {
-      color: #fff !important;
-      
+  
+  .register-button {
+      color: #fff;
+      background-color: #d92027;
+      transition-duration: 0.4s;
       text-transform: uppercase;
       text-decoration: none;
       padding: 20px;
@@ -56,6 +64,15 @@ html, body {
       width: 100%;
   }
 
+  .register-button:hover {
+    background-color: white; /* Green */
+    color: #d92027;
+  }
+
+  .sign-button:hover {
+    background-color: white; /* Green */
+    color: #008CBA;
+  }
   .mt-20 {
     margin-top: 20px;
   }

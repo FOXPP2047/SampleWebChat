@@ -17,7 +17,7 @@ const io = socketio(server);
 app.use(cors());
 app.use(router);
 
-mongoose.connect("mongodb://localhost:27017/chatDB", {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect("mongodb://localhost:27017/chatDB", {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false});
 
 const chatUserDBSchema = {
     name: String,
@@ -129,7 +129,7 @@ io.on("connect", (socket) => {
     });
 
     socket.on("disconnect", async () => {
-        const userData = getUser(socket.id);
+        const userData = await getUser(socket.id);
 
         if(userData) {
             let userName = userData.name;
@@ -142,11 +142,16 @@ io.on("connect", (socket) => {
                     if(element === userName) {
                         result.users.splice(index, 1);
                         result.save();
+                        return;
                     }
                 });
     
                 if(!result.users.length) {
-                    Room.deleteOne({ name: result.name }, function() {});
+                    Room.findOneAndDelete({ name: result.name }, function(err) {
+                        console.log("asdas");
+                        if(err)
+                            console.log(err);
+                    });
                 }
             }
         }

@@ -57,7 +57,7 @@ const Register = () => {
                 <div> <input onChange={handleConfirmPassword} placeholder="Confirm Password" className="joinInput mt-20" type="password" /> </div>
                 <button 
                     onClick={event => passwordCheck(event)} 
-                    className="button mt-20 register" 
+                    className="register-button mt-20" 
                     type="submit">Register
                 </button>
             </div>
