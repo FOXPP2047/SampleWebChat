@@ -9,6 +9,7 @@ let socket;
 const Join = () => {
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
+    let authenticated = false;
     
     function handleNameChange(event) {
         setName(event.target.value);
@@ -35,6 +36,7 @@ const Join = () => {
                 window.location.reload();
             } else if(loginCheck === 1) {
                 history.push("/rooms?name=" + name);
+                authenticated = true;
             }
         });
     }

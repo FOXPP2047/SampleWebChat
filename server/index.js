@@ -135,7 +135,7 @@ io.on("connect", (socket) => {
             let userName = userData.name;
             let roomName = userData.room;
 
-            const result = await Room.findOne({name: roomName});
+            const result = await Room.findOne({name: roomName}).exec();
 
             if(result) {
                 result.users.forEach((element, index) => {
@@ -148,7 +148,6 @@ io.on("connect", (socket) => {
     
                 if(!result.users.length) {
                     Room.findOneAndDelete({ name: result.name }, function(err) {
-                        console.log("asdas");
                         if(err)
                             console.log(err);
                     });
